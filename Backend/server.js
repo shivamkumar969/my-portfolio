@@ -13,7 +13,10 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" })); // Allow images to be loaded cross-origin
-app.use(cors());
+app.use(cors({
+  origin: ["http://localhost:5173", "https://port-folio-sage-beta.vercel.app"],
+  credentials: true
+}));
 app.use(express.json());
 
 // Ensure uploads directory exists
