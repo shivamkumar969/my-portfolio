@@ -121,7 +121,7 @@ app.get('/api/projects', async (req, res) => {
       id: p._id,
       title: p.title,
       description: p.description,
-      image: p.image.startsWith('http') ? p.image : `http://localhost:5000/${p.image}`,
+      image: p.image.startsWith('http') ? p.image : `${APP_URL}/${p.image}`,
       github: p.github,
       live: p.live
     }));
@@ -166,7 +166,7 @@ app.post('/api/projects', verifyAdmin, (req, res, next) => {
         id: savedProject._id,
         title: savedProject.title,
         description: savedProject.description,
-        image: `http://localhost:5000/${savedProject.image}`,
+        image: savedProject.image.startsWith('http') ? savedProject.image : `${APP_URL}/${savedProject.image}`,
         github: savedProject.github,
         live: savedProject.live
       }
@@ -220,7 +220,7 @@ app.put('/api/projects/:id', verifyAdmin, (req, res, next) => {
         id: updatedProject._id,
         title: updatedProject.title,
         description: updatedProject.description,
-        image: updatedProject.image.startsWith('http') ? updatedProject.image : `http://localhost:5000/${updatedProject.image}`,
+        image: updatedProject.image.startsWith('http') ? updatedProject.image : `${APP_URL}/${updatedProject.image}`,
         github: updatedProject.github,
         live: updatedProject.live
       }
@@ -320,7 +320,8 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5000;
+const APP_URL = process.env.APP_URL || `http://localhost:${PORT}`;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
