@@ -18,6 +18,8 @@ function Admin() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [editingId, setEditingId] = useState(null);
 
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
   // Check if already logged in
   useEffect(() => {
     const token = sessionStorage.getItem("adminToken");
@@ -31,7 +33,7 @@ function Admin() {
     e.preventDefault();
     setLoginError("");
     try {
-      const res = await fetch("http://localhost:5000/api/login", {
+      const res = await fetch(`${API_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password })
@@ -51,7 +53,7 @@ function Admin() {
 
   const fetchProjects = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/projects");
+      const res = await fetch(`${API_URL}/api/projects`);
       const data = await res.json();
       if (Array.isArray(data)) setProjects(data);
     } catch (error) {
@@ -109,8 +111,8 @@ function Admin() {
 
     try {
       const url = editingId 
-        ? `http://localhost:5000/api/projects/${editingId}`
-        : "http://localhost:5000/api/projects";
+        ? `${API_URL}/api/projects/${editingId}`
+        : `${API_URL}/api/projects`;
         
       const res = await fetch(url, {
         method: editingId ? "PUT" : "POST",
@@ -142,7 +144,7 @@ function Admin() {
     const token = sessionStorage.getItem("adminToken");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/projects/${id}`, {
+      const res = await fetch(`${API_URL}/api/projects/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`
