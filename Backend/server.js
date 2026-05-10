@@ -320,6 +320,7 @@ app.post('/api/contact', contactLimiter, async (req, res) => {
   }
 });
 
+const PORT = process.env.PORT || 10000;
 const APP_URL = process.env.APP_URL || `http://localhost:${PORT}`;
 
 app.listen(PORT, () => {
